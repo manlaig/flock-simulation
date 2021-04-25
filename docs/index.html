@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Final Project</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging</h1>
+<h1 align="middle">Final Project: Flock Simulator</h1>
+<h2 align="middle">Pongsatorn Chanpanichravee, Michael Ganzorig, and Yu Jia Xu, CS184</h2>
+
+<br><br>
+
+<div>
+
+<h2 align="middle">Overview</h2>
+  <p>
+    The goal is to simulate the motion of a flock of fish in a beautify ocean.
+    We will use the Boids algorithm to simulate the motion.
+  </p>
+  <h3>Why we are doing this</h3>
+    <p>
+      I watch documentaries about the ocean and realize how beautiful it is, especially in the coral reef with different
+      flocks of fish swimming gently in the ocean. Not everyone can go scuba diving whenever they want, but we can bring
+      (virtual) ocean to you to enjoy. Moreover, according to the article byt BBC, "Great Barrier Reef has lost half
+      of its corals since 1995," with climate change and its impacts on the coral reef ecosystem,
+      I am afraid that the stunning visual of the coral reef might not last. So if our project can remind people of
+      what they are going to lose and start to care about the ocean, that would count as an ultimate success for us.
+    </p>
+    <div align="center">
+      <table style="width=100%">
+        <tr>
+          <td align="middle">
+            <img src="coral_reef.jpg" width="480px" />
+            <figcaption align="middle">Image by Glemda Escudero</figcaption>
+          <td align="middle">
+            <img src="dying_reef.jpg" width="520px" />
+            <figcaption align="middle">Image by Andreas Dietzel from BBC</figcaption>
+        </tr>
+      </table>
+    </div>
+  <h3>What are the challenges</h3>
+    <p>
+      To stimulate this emotion in people, the simulation needs to be believable, realistic, and beautiful, not only
+      in term of graphic but also behavior. This will prove to be challenging to implement boids algorithm to get
+      similar behavior as a real flock of fish that avoid obstacles and interact with other bigger fish.
+      There also challenges in making realistic underwater environment that we must solve to achieve realism.
+    </p>
+<h2 align="middle">Goals and Deliverables</h2>
+  <h3>Goal</h3>
+  <p>
+    The goal is to simulate a realistic behavior of a flock of fish under the ocean.
+    They swim around obstacles without colliding with them and interact with other fish.
+  </p>
+  <p>
+    To achieve this, we plan to deliver underwater environments with different obstacles arranged
+    for the flock to move around in.
+  </p>
+  <h3>Measure the Quality</h3>
+  <p>
+    We can compare our simulation with real-world behaviors to measure how well our simulation does.
+    Collision and other unrealistic behaviors can also signify the quality of the simulation.
+    We define good performance as being able to render a real-time simulation of a flock without lags and with high FPS.
+    If we can achieve high FPS, that means our algorithm to determine the behavior of the whole flock runs efficiently.
+  </p>
+  <h3>What we plan and what we hope to achieve</h3>
+  <p>
+    We plan to deliver a flock of fish swimming smoothly in real-time render.
+    And if our implementation goes well, we might be able to simulate a huge flock of fish
+    that can avoid obstacles and interact with a big fish like a shark!
+  </p>
+<br>
+<h2 align="middle">Schedule: First draft</h2>
+  <p>
+    1st week: create ocean background, make 3d fish objects. given a group of fish with each of them having
+    different moving direction and speed. Group them to be a flock. <br>
+    2nd week: make improvements to the flock of fish to make it more realistic to the fish in the real world.
+    In this moment just assume this ocean only have this one kind of fish, so no other objects will affect them.<br>
+    3rd week: finish the part of the code about the flock of fish interacting with other objects in the ocean.<br>
+    4th week: reserved as extra if anything happens.
+  </p>
+  <br>
+<h2 align="center">Resources</h2>
+  <p>We will use online resources, such as articles and research papers, related to the Boids algorithm,
+    which is the algorithm defining the behavior of a flock. Also, we will build our project on top of
+    the Unity game engine. Using the Unity game engine will make it easier for us to render and deal with 3D models.
+    Using Unity, we will build the 3D environment for our flock and we will write the necessary code to simulate
+    the motion and behavior of the flock in the scene.
+  </p>
+</div>
+</body>
+</html>
