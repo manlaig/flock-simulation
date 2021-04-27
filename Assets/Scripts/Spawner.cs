@@ -12,10 +12,18 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < initialSpawn; i++)
+        Vector2 rightEdge = Camera.main.ViewportToWorldPoint(new Vector2(1, 0));
+        Vector2 leftEdge = Camera.main.ViewportToWorldPoint(new Vector2(-1, 0));
+        Vector2 topEdge = Camera.main.ViewportToWorldPoint(new Vector2(0, 1));
+        Vector2 bottomEdge = Camera.main.ViewportToWorldPoint(new Vector2(0, -1));
+
+        for (int i = 0; i < initialSpawn; i++)
         {
-            GameObject obj = GameObject.Instantiate(boid);
-            obj.transform.position = Vector3.zero;
+            GameObject obj = Instantiate(boid);
+
+            float x = Random.Range(leftEdge.x, rightEdge.x);
+            float y = Random.Range(topEdge.y, bottomEdge.y);
+            obj.transform.position = new Vector3(x, y, 0);
         }
     }
 

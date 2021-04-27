@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3020047058072681954}
   - component: {fileID: 3020047058072681981}
   - component: {fileID: 3020047058072681980}
-  - component: {fileID: 3020047058072681983}
   - component: {fileID: 6535040668897417525}
   m_Layer: 0
   m_Name: Boid
@@ -47,11 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4ff53077600c407ab89990e701ae1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
-  overlapRadius: 20
-  separationFactor: 5
-  cohesionFactor: 0
-  alignmentFactor: 5
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!33 &3020047058072681981
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -101,22 +96,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &3020047058072681983
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3020047058072681953}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!135 &6535040668897417525
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -125,7 +104,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3020047058072681953}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
