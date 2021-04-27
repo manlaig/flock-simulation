@@ -47,14 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4ff53077600c407ab89990e701ae1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  maxSpeed: 50
-  minForce: 25
-  maxForce: 250
-  overlapRadius: 10
-  separationFactor: 10
-  cohesionFactor: 0.2
-  alignmentFactor: 1
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!33 &3020047058072681981
 MeshFilter:
   m_ObjectHideFlags: 0

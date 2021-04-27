@@ -4,60 +4,59 @@ using UnityEngine;
 
 public class Boid : MonoBehaviour
 {
-    [SerializeField] float speed = 2f;
-    [SerializeField] float maxSpeed = 1f;
-
-    [SerializeField] float minForce = 1f;
-    [SerializeField] float maxForce = 1f;
-
-    [SerializeField] float overlapRadius = 8f;
-
-    [SerializeField] float separationFactor = 1;
-    [SerializeField] float cohesionFactor = 1;
-    [SerializeField] float alignmentFactor = 1;
+    Globals g;
+    public Vector3 velocity;
 
     // Start is called before the first frame update
     void Start()
     {
+        g = GameObject.Find("Globals").GetComponent<Globals>();
+
         // start with a random velocity
-        Vector3 dir = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
-        GetComponent<Rigidbody>().velocity = dir * speed;
+        // Vector3 dir = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+
+        // GetComponent<Rigidbody>().velocity = dir;
+        velocity = Vector3.zero;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if(rb.velocity.magnitude > maxSpeed)
+        /*Rigidbody rb = GetComponent<Rigidbody>();
+        if(rb.velocity.magnitude > g.maxSpeed)
         {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
-        }
+            rb.velocity = rb.velocity.normalized * g.maxSpeed;
+        }*/
 
-        Collider[] overlaps = Physics.OverlapSphere(transform.position, overlapRadius);
+        Collider[] overlaps = Physics.OverlapSphere(transform.position, g.overlapRadius);
 
         // compute the separation, alignment, and cohesion forces here
         Vector3 dir = getAlignmentForce(overlaps) + getCohesionForce(overlaps) + getSeparationForce(overlaps);
 
-        if (dir.magnitude < minForce)
-            dir = dir.normalized * minForce;
-        else if (dir.magnitude > maxForce)
-            dir = dir.normalized * maxForce;
+        float force = dir.magnitude;
+        force = Mathf.Clamp(force, g.minForce, g.maxForce);
+        dir = dir.normalized * force;
 
-        rb.AddForce(dir);
-        // rb.velocity = dir;
+        // rb.AddForce(dir);
 
-        Vector2 rightEdge = Camera.main.ViewportToWorldPoint(new Vector2(1, 0));
-        Vector2 leftEdge = Camera.main.ViewportToWorldPoint(new Vector2(-1, 0));
-        Vector2 topEdge = Camera.main.ViewportToWorldPoint(new Vector2(0, 1));
-        Vector2 bottomEdge = Camera.main.ViewportToWorldPoint(new Vector2(0, -1));
-        if (transform.position.x >= rightEdge.x)
-            transform.position = new Vector3(leftEdge.x, transform.position.y, transform.position.z);
-        else if (transform.position.x <= leftEdge.x)
-            transform.position = new Vector3(rightEdge.x, transform.position.y, transform.position.z);
-        else if (transform.position.y >= topEdge.y)
-            transform.position = new Vector3(transform.position.x, bottomEdge.y, transform.position.z);
-        else if (transform.position.y <= bottomEdge.y)
-            transform.position = new Vector3(transform.position.x, topEdge.y, transform.position.z);
+        velocity += dir * Time.deltaTime;
+        float speed = velocity.magnitude;
+        speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
+        velocity = velocity.normalized * speed;
+
+        transform.position += velocity * Time.deltaTime;
+
+
+        Vector2 topRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+        Vector2 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        if (transform.position.x >= topRight.x)
+            transform.position = new Vector3(bottomLeft.x, transform.position.y, transform.position.z);
+        else if (transform.position.x <= bottomLeft.x)
+            transform.position = new Vector3(topRight.x, transform.position.y, transform.position.z);
+        else if (transform.position.y >= topRight.y)
+            transform.position = new Vector3(transform.position.x, bottomLeft.y, transform.position.z);
+        else if (transform.position.y <= bottomLeft.y)
+            transform.position = new Vector3(transform.position.x, topRight.y, transform.position.z);
     }
 
     Vector3 getAlignmentForce(Collider[] overlaps)
@@ -66,7 +65,8 @@ public class Boid : MonoBehaviour
         int count = 0;
         foreach(Collider col in overlaps)
         {
-            Rigidbody temp = col.gameObject.GetComponent<Rigidbody>();
+            // Rigidbody temp = col.gameObject.GetComponent<Rigidbody>();
+            Boid temp = col.gameObject.GetComponent<Boid>();
             if (!temp)
                 continue;
             total += temp.velocity;
@@ -75,8 +75,14 @@ public class Boid : MonoBehaviour
         if(count != 0)
         {
             Vector3 avg = total / count;
-            avg = avg.normalized * maxSpeed;
-            return (avg - GetComponent<Rigidbody>().velocity) * alignmentFactor;
+
+            float speed = avg.magnitude;
+            speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
+            avg = avg.normalized * speed;
+
+            // Vector3 scaled = (avg - GetComponent<Rigidbody>().velocity) * g.alignmentFactor;
+            Vector3 scaled = (avg - velocity) * g.alignmentFactor;
+            return scaled;
         }
         return total;
     }
@@ -87,18 +93,26 @@ public class Boid : MonoBehaviour
         int count = 0;
         foreach (Collider col in overlaps)
         {
-            Rigidbody temp = col.gameObject.GetComponent<Rigidbody>();
+            // Rigidbody temp = col.gameObject.GetComponent<Rigidbody>();
+            Boid temp = col.gameObject.GetComponent<Boid>();
             if (!temp)
                 continue;
-            total += temp.position;
+            // total += temp.position;
+            total += temp.transform.position;
             count++;
         }
         if (count != 0)
         {
             Vector3 avg = total / count;
             avg -= transform.position;
-            avg = avg.normalized * maxSpeed;
-            return (avg - GetComponent<Rigidbody>().velocity) * cohesionFactor;
+
+            float speed = avg.magnitude;
+            speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
+            avg = avg.normalized * speed;
+
+            // Vector3 scaled = (avg - GetComponent<Rigidbody>().velocity) * g.cohesionFactor;
+            Vector3 scaled = (avg - velocity) * g.cohesionFactor;
+            return scaled;
         }
         return total;
     }
@@ -109,23 +123,33 @@ public class Boid : MonoBehaviour
         int count = 0;
         foreach (Collider col in overlaps)
         {
-            Rigidbody temp = col.gameObject.GetComponent<Rigidbody>();
+            // Rigidbody temp = col.gameObject.GetComponent<Rigidbody>();
+            Boid temp = col.gameObject.GetComponent<Boid>();
             if (!temp)
                 continue;
 
-            Vector3 diff = transform.position - temp.position;
-            float div = 1f / Vector3.Distance(transform.position, temp.position);
-            total = total + Mathf.Min(10000, div) * diff;
+            // Vector3 diff = transform.position - temp.position;
+            Vector3 diff = transform.position - temp.transform.position;
+            // float div = Mathf.Pow(Vector3.Distance(transform.position, temp.position), 2);
+            float div = 1f / Mathf.Pow(Vector3.Distance(transform.position, temp.transform.position), 2);
+            total += diff * Mathf.Min(10000, div);
             count++;
         }
         Vector3 avg = count != 0 ? total / count : total;
-        return (avg - GetComponent<Rigidbody>().velocity) * separationFactor;
+
+        float speed = avg.magnitude;
+        speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
+        avg = avg.normalized * speed;
+
+        // return (avg - GetComponent<Rigidbody>().velocity) * g.separationFactor;
+        return (avg - velocity) * g.separationFactor;
     }
 
     void OnDrawGizmos()
     {
         // used for visualizing the velocity direction
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + GetComponent<Rigidbody>().velocity);
+        // Gizmos.DrawLine(transform.position, transform.position + GetComponent<Rigidbody>().velocity);
+        Gizmos.DrawLine(transform.position, transform.position + velocity);
     }
 }
