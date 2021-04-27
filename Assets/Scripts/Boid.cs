@@ -11,23 +11,12 @@ public class Boid : MonoBehaviour
     void Start()
     {
         g = GameObject.Find("Globals").GetComponent<Globals>();
-
-        // start with a random velocity
-        // Vector3 dir = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
-
-        // GetComponent<Rigidbody>().velocity = dir;
         velocity = Vector3.zero;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*Rigidbody rb = GetComponent<Rigidbody>();
-        if(rb.velocity.magnitude > g.maxSpeed)
-        {
-            rb.velocity = rb.velocity.normalized * g.maxSpeed;
-        }*/
-
         Collider[] overlaps = Physics.OverlapSphere(transform.position, g.overlapRadius);
 
         // compute the separation, alignment, and cohesion forces here
@@ -37,8 +26,6 @@ public class Boid : MonoBehaviour
         force = Mathf.Clamp(force, g.minForce, g.maxForce);
         dir = dir.normalized * force;
 
-        // rb.AddForce(dir);
-
         velocity += dir * Time.deltaTime;
         float speed = velocity.magnitude;
         speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
@@ -46,7 +33,12 @@ public class Boid : MonoBehaviour
 
         transform.position += velocity * Time.deltaTime;
 
+        WrapAround();
+    }
 
+    // Temporary function for 2D
+    void WrapAround()
+    {
         Vector2 topRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
         Vector2 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         if (transform.position.x >= topRight.x)
@@ -65,7 +57,6 @@ public class Boid : MonoBehaviour
         int count = 0;
         foreach(Collider col in overlaps)
         {
-            // Rigidbody temp = col.gameObject.GetComponent<Rigidbody>();
             Boid temp = col.gameObject.GetComponent<Boid>();
             if (!temp)
                 continue;
@@ -80,7 +71,6 @@ public class Boid : MonoBehaviour
             speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
             avg = avg.normalized * speed;
 
-            // Vector3 scaled = (avg - GetComponent<Rigidbody>().velocity) * g.alignmentFactor;
             Vector3 scaled = (avg - velocity) * g.alignmentFactor;
             return scaled;
         }
@@ -93,11 +83,10 @@ public class Boid : MonoBehaviour
         int count = 0;
         foreach (Collider col in overlaps)
         {
-            // Rigidbody temp = col.gameObject.GetComponent<Rigidbody>();
             Boid temp = col.gameObject.GetComponent<Boid>();
             if (!temp)
                 continue;
-            // total += temp.position;
+            
             total += temp.transform.position;
             count++;
         }
@@ -110,7 +99,6 @@ public class Boid : MonoBehaviour
             speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
             avg = avg.normalized * speed;
 
-            // Vector3 scaled = (avg - GetComponent<Rigidbody>().velocity) * g.cohesionFactor;
             Vector3 scaled = (avg - velocity) * g.cohesionFactor;
             return scaled;
         }
@@ -123,14 +111,11 @@ public class Boid : MonoBehaviour
         int count = 0;
         foreach (Collider col in overlaps)
         {
-            // Rigidbody temp = col.gameObject.GetComponent<Rigidbody>();
             Boid temp = col.gameObject.GetComponent<Boid>();
             if (!temp)
                 continue;
 
-            // Vector3 diff = transform.position - temp.position;
             Vector3 diff = transform.position - temp.transform.position;
-            // float div = Mathf.Pow(Vector3.Distance(transform.position, temp.position), 2);
             float div = 1f / Mathf.Pow(Vector3.Distance(transform.position, temp.transform.position), 2);
             total += diff * Mathf.Min(10000, div);
             count++;
@@ -141,7 +126,6 @@ public class Boid : MonoBehaviour
         speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
         avg = avg.normalized * speed;
 
-        // return (avg - GetComponent<Rigidbody>().velocity) * g.separationFactor;
         return (avg - velocity) * g.separationFactor;
     }
 
@@ -149,7 +133,6 @@ public class Boid : MonoBehaviour
     {
         // used for visualizing the velocity direction
         Gizmos.color = Color.blue;
-        // Gizmos.DrawLine(transform.position, transform.position + GetComponent<Rigidbody>().velocity);
         Gizmos.DrawLine(transform.position, transform.position + velocity);
     }
 }
