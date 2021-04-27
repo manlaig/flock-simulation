@@ -23,7 +23,7 @@ public class Spawner : MonoBehaviour
 
             float x = Random.Range(leftEdge.x, rightEdge.x);
             float y = Random.Range(topEdge.y, bottomEdge.y);
-            obj.transform.position = new Vector3(x, y, Random.Range(-5, 5));
+            obj.transform.position = new Vector3(x, y, 0);
         }
     }
 

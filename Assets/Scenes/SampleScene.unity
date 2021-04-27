@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boid: {fileID: 3020047058072681953, guid: d1155a5e6231444a4ae320400ea29d1b, type: 3}
-  initialSpawn: 100
+  initialSpawn: 200
 --- !u!1 &638809581
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,14 +197,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5de735779a44124bf2febe24e9d9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 35
-  maxSpeed: 80
-  minForce: 35
-  maxForce: 70
-  overlapRadius: 30
-  separationFactor: 8
-  cohesionFactor: 12
-  alignmentFactor: 15
+  minSpeed: 10
+  maxSpeed: 30
+  overlapRadius: 5
+  separationFactor: 1.8
+  cohesionFactor: 1.6
+  alignmentFactor: 1
 --- !u!4 &638809583
 Transform:
   m_ObjectHideFlags: 0
@@ -365,7 +363,7 @@ Camera:
   far clip plane: 10000
   field of view: 100
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 35
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

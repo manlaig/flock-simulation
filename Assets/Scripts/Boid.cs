@@ -11,7 +11,10 @@ public class Boid : MonoBehaviour
     void Start()
     {
         g = GameObject.Find("Globals").GetComponent<Globals>();
-        velocity = Vector3.zero;
+        velocity = Random.insideUnitSphere * g.maxSpeed;
+
+        // temporary for 2D
+        velocity.z = 0;
     }
 
     // Update is called once per frame
@@ -22,14 +25,13 @@ public class Boid : MonoBehaviour
         // compute the separation, alignment, and cohesion forces here
         Vector3 dir = getAlignmentForce(overlaps) + getCohesionForce(overlaps) + getSeparationForce(overlaps);
 
-        float force = dir.magnitude;
-        force = Mathf.Clamp(force, g.minForce, g.maxForce);
-        dir = dir.normalized * force;
-
         velocity += dir * Time.deltaTime;
         float speed = velocity.magnitude;
         speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
         velocity = velocity.normalized * speed;
+
+        // temporary for 2D
+        velocity.z = 0;
 
         transform.position += velocity * Time.deltaTime;
 
@@ -66,10 +68,7 @@ public class Boid : MonoBehaviour
         if(count != 0)
         {
             Vector3 avg = total / count;
-
-            float speed = avg.magnitude;
-            speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
-            avg = avg.normalized * speed;
+            avg *= g.maxSpeed;
 
             Vector3 scaled = (avg - velocity) * g.alignmentFactor;
             return scaled;
@@ -94,10 +93,7 @@ public class Boid : MonoBehaviour
         {
             Vector3 avg = total / count;
             avg -= transform.position;
-
-            float speed = avg.magnitude;
-            speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
-            avg = avg.normalized * speed;
+            avg *= g.maxSpeed;
 
             Vector3 scaled = (avg - velocity) * g.cohesionFactor;
             return scaled;
@@ -116,15 +112,12 @@ public class Boid : MonoBehaviour
                 continue;
 
             Vector3 diff = transform.position - temp.transform.position;
-            float div = 1f / Mathf.Pow(Vector3.Distance(transform.position, temp.transform.position), 2);
-            total += diff * Mathf.Min(10000, div);
+            // float div = 1f / Mathf.Pow(Vector3.Distance(transform.position, temp.transform.position), 2);
+            total += diff;// * Mathf.Min(10000, div);
             count++;
         }
         Vector3 avg = count != 0 ? total / count : total;
-
-        float speed = avg.magnitude;
-        speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
-        avg = avg.normalized * speed;
+        avg *= g.maxSpeed;
 
         return (avg - velocity) * g.separationFactor;
     }
