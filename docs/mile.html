@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Rasterizer</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2021</h1>
+<h1 align="middle">Final Project: Ocean Simulation</h1>
+<h2 align="middle">Pongsatorn Chanpanichravee, Michael Ganzorig, and Yu Jia Xu , CS184</h2>
+
+<br><br>
+
+    <div>
+
+        <h2 align="middle">Overview</h2>
+        <p>This webpage is summarization of what we have accomplished, preliminary results, reflect on progress relative to our plan, and update our work plan as appropriate.</p>
+
+        <h2 align="middle">Part I: Summarization of accomplishment and preliminary results</h2>
+
+        <!--Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion. -->
+        <p>
+            So far we have finished writing the algorithm defining the motion of the flock, the algorithm and motion of the wave and the environment under the water. For the flock simulation part, the basic idea behind that is the Separation, Alignment and Cohesion.
+            The combination of those gives us the scene of flock simulation and this part we have already finished(also we will show this on the video). For water wave part, the basic idea is creating a scene above the water, which we create a square of clothes mesh first.
+            And then now we have applied this mesh with perlin noise function and cosine function interacting with time and height(which is z value) to simulate the movement of water wave. For the environment under the water, we initially create 4 side of blue walls around the scene as the backgournd.
+            And we have used light projectors to cast water caustic effects on the water surface and ocean floor. And then add some objects like small hills and seaweeds inside.
+        </p>
+
+
+
+        <div align="middle">
+            <table style="width=100%">
+                <tr>
+                    <td>
+                        <img src="wavesim.png" align="middle" width="400px" />
+                        <figcaption align="middle">wave simulation.</figcaption>
+                    </td>
+
+                    <td>
+                        <img src="flocksim.png" align="middle" width="400px" />
+                        <figcaption align="middle">flock simulation.</figcaption>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <img src="ocean.png" align="middle" width="400px" />
+                        <figcaption align="middle">scene of ocean.</figcaption>
+                    </td>
+
+                </tr>
+
+            </table>
+        </div>
+
+        <h2 align="middle">Part II: Reflection on progress and the update of the plan</h2>
+        <p>
+            So far we believe that our work speed has exceeded our initial expectations. For flock simulation what we need to do is just apply fish object instead of white dots we have shown. This can be done by either creating fish object by ourself or using the public fish object
+            on the internet if none of us is artist. for wave simulation what we need to do later is create water material and apply the color on the wave mesh. and for the scene under water, we have realized that the initial stage that we have made maybe too small to handle such
+            a large number of fish for flock simulation, so we plan to expand the stage under the water. And also combine this scene with wave. Note that in the wave simulation there is a condition call alternative which is use for interacting water wave with height. so we will
+            combine our under water scene with water wave in height value(which is y in unity) also.
+        </p>
+
+        <h3 align="middle">original plan</h3>
+        <p>
+            <br />1st week: create ocean background, make 3d fish objects. given a group of fish with each of them having different moving direction and speed. Group them to be a flock.
+            <br />2nd week: make improvements to the flock of fish to make it more approach to the fish in the real world. In this moment just assume this ocean only have this one kind of fish, so no other objects will affect them.
+            <br /> 3rd week: finish the part of the code about the flock of fish interacting with other objects in the ocean.
+            <br />4th week: reserved as extra if anything happens.
+        </p>
+        <h3 align="middle">updated plan</h3>
+        <p>
+            1 week plan: make 3d fish objects. apply them to flock simulation. combine wave, flock, ocean scene together.
+            Optional: expand the ocean scene if have time
+        </p>
+
+
+
+
+
+    </div></body>
+</html>
