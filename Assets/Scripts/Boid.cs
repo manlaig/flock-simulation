@@ -14,9 +14,6 @@ public class Boid : MonoBehaviour
     {
         g = GameObject.Find("Globals").GetComponent<Globals>();
         velocity = Random.insideUnitSphere * g.maxSpeed;
-
-        // temporary for 2D
-        velocity.z = 0;
     }
 
     // Update is called once per frame
@@ -39,12 +36,10 @@ public class Boid : MonoBehaviour
         speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
         velocity = velocity.normalized * speed;
 
-        // temporary for 2D
-        velocity.z = 0;
-
         transform.position += velocity * Time.deltaTime;
 
-        WrapAround();
+        // WrapAround();
+        WrapAround3D();
     }
 
     // Temporary function for 2D
@@ -60,6 +55,24 @@ public class Boid : MonoBehaviour
             transform.position = new Vector3(transform.position.x, bottomLeft.y, transform.position.z);
         else if (transform.position.y <= bottomLeft.y)
             transform.position = new Vector3(transform.position.x, topRight.y, transform.position.z);
+    }
+
+    void WrapAround3D()
+    {
+        Vector3 topRight = new Vector3(50, 60, 50);
+        Vector3 bottomLeft = new Vector3(-50, 0, -50);
+        if (transform.position.x >= topRight.x)
+            transform.position = new Vector3(bottomLeft.x, transform.position.y, transform.position.z);
+        else if (transform.position.x <= bottomLeft.x)
+            transform.position = new Vector3(topRight.x, transform.position.y, transform.position.z);
+        else if (transform.position.y >= topRight.y)
+            transform.position = new Vector3(transform.position.x, bottomLeft.y, transform.position.z);
+        else if (transform.position.y <= bottomLeft.y)
+            transform.position = new Vector3(transform.position.x, topRight.y, transform.position.z);
+        else if (transform.position.z >= topRight.z)
+            transform.position = new Vector3(transform.position.x, transform.position.y, bottomLeft.z);
+        else if (transform.position.z <= bottomLeft.z)
+            transform.position = new Vector3(transform.position.x, transform.position.y, topRight.z);
     }
 
     Vector3 getAlignmentForce(Collider[] overlaps)
