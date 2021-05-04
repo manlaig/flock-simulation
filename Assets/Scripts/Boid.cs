@@ -28,7 +28,7 @@ public class Boid : MonoBehaviour
         Vector3 dir = getAlignmentForce(overlaps) + getCohesionForce(overlaps) + getSeparationForce(overlaps);
 
         RaycastHit hit;
-        if (Physics.Raycast(new Ray(transform.position, dir), out hit, g.obstacleLookahead, ~LayerMask.NameToLayer("Obstacle")))
+        if (Physics.Raycast(new Ray(transform.position, velocity), out hit, g.obstacleLookahead, ~LayerMask.NameToLayer("Obstacle")))
         {
             Vector3 reflection = Vector3.Reflect(velocity, hit.normal);
             dir = g.obstacleAvoidFactor * (reflection - transform.position);
