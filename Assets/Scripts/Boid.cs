@@ -5,6 +5,8 @@ using UnityEngine;
 public class Boid : MonoBehaviour
 {
     Globals g;
+
+    [HideInInspector]
     public Vector3 velocity;
 
     // Start is called before the first frame update
@@ -24,6 +26,13 @@ public class Boid : MonoBehaviour
 
         // compute the separation, alignment, and cohesion forces here
         Vector3 dir = getAlignmentForce(overlaps) + getCohesionForce(overlaps) + getSeparationForce(overlaps);
+
+        RaycastHit hit;
+        if (Physics.Raycast(new Ray(transform.position, dir), out hit, g.obstacleLookahead, ~LayerMask.NameToLayer("Obstacle")))
+        {
+            Vector3 reflection = Vector3.Reflect(velocity, hit.normal);
+            dir = g.obstacleAvoidFactor * (reflection - transform.position);
+        }
 
         velocity += dir * Time.deltaTime;
         float speed = velocity.magnitude;
