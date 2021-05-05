@@ -7286,13 +7286,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpeed: 10
-  maxSpeed: 25
+  maxSpeed: 30
   overlapRadius: 10
   obstacleLookahead: 15
   separationFactor: 5
-  cohesionFactor: 3
+  cohesionFactor: 4
   alignmentFactor: 3
-  obstacleAvoidFactor: 10
+  obstacleAvoidFactor: 9
   topRight: {x: 50, y: 50, z: 50}
   bottomLeft: {x: -50, y: 0, z: -50}
 --- !u!4 &1093411186
