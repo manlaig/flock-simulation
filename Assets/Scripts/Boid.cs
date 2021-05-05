@@ -60,8 +60,8 @@ public class Boid : MonoBehaviour
 
     void WrapAround3D()
     {
-        Vector3 topRight = new Vector3(100, 60, 100);
-        Vector3 bottomLeft = new Vector3(-100, 1, -100);
+        Vector3 topRight = g.topRight;
+        Vector3 bottomLeft = g.bottomLeft;
         if (transform.position.x >= topRight.x)
             transform.position = new Vector3(bottomLeft.x, transform.position.y, transform.position.z);
         else if (transform.position.x <= bottomLeft.x)
