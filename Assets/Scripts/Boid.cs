@@ -25,16 +25,17 @@ public class Boid : MonoBehaviour
         Vector3 dir = getAlignmentForce(overlaps) + getCohesionForce(overlaps) + getSeparationForce(overlaps);
 
         RaycastHit hit;
-        if (Physics.Raycast(new Ray(transform.position, velocity), out hit, g.obstacleLookahead, ~LayerMask.NameToLayer("Obstacle")))
+        if (Physics.Raycast(new Ray(transform.position, dir), out hit, g.obstacleLookahead, ~LayerMask.NameToLayer("Obstacle")))
         {
-            Vector3 reflection = Vector3.Reflect(velocity, hit.normal);
-            dir = g.obstacleAvoidFactor * (reflection - transform.position);
+            Vector3 reflection = Vector3.Reflect(dir, hit.normal);
+            dir = g.obstacleAvoidFactor / hit.distance * (reflection - transform.position);
         }
 
         velocity += dir * Time.deltaTime;
         float speed = velocity.magnitude;
         speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
         velocity = velocity.normalized * speed;
+        transform.rotation = Quaternion.LookRotation(velocity);
 
         transform.position += velocity * Time.deltaTime;
 
@@ -59,8 +60,8 @@ public class Boid : MonoBehaviour
 
     void WrapAround3D()
     {
-        Vector3 topRight = new Vector3(50, 60, 50);
-        Vector3 bottomLeft = new Vector3(-50, 0, -50);
+        Vector3 topRight = new Vector3(100, 60, 100);
+        Vector3 bottomLeft = new Vector3(-100, 1, -100);
         if (transform.position.x >= topRight.x)
             transform.position = new Vector3(bottomLeft.x, transform.position.y, transform.position.z);
         else if (transform.position.x <= bottomLeft.x)
