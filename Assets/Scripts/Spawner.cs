@@ -8,25 +8,17 @@ public class Spawner : MonoBehaviour
     GameObject boid;
     [SerializeField]
     int initialSpawn = 20;
-    [SerializeField]
-    Vector3 topRight;
-    [SerializeField]
-    Vector3 bottomLeft;
 
     void Start()
     {
-        /*if (screenBound)
-        {
-            topRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
-            bottomLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
-        }*/
+        Globals g = GameObject.Find("Globals").GetComponent<Globals>();
         for (int i = 0; i < initialSpawn; i++)
         {
             GameObject obj = Instantiate(boid);
 
-            float x = Random.Range(bottomLeft.x, topRight.x);
-            float y = Random.Range(bottomLeft.y, topRight.y);
-            float z = Random.Range(bottomLeft.z, topRight.z);
+            float x = Random.Range(g.bottomLeft.x, g.topRight.x);
+            float y = Random.Range(g.bottomLeft.y, g.topRight.y);
+            float z = Random.Range(g.bottomLeft.z, g.topRight.z);
             obj.transform.position = new Vector3(x, y, z);
         }
     }

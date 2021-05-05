@@ -14,4 +14,7 @@ public class Globals : MonoBehaviour
     public float cohesionFactor = 1;
     public float alignmentFactor = 1;
     public float obstacleAvoidFactor = 1;
+
+    public Vector3 topRight = new Vector3(100, 60, 100);
+    public Vector3 bottomLeft = new Vector3(-100, 1, -100);
 }
