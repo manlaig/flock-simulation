@@ -8809,6 +8809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boid: {fileID: 3020047058072681953, guid: d1155a5e6231444a4ae320400ea29d1b, type: 3}
+  boid2: {fileID: 3020047058072681953, guid: 515c16b3c608d4e2cbd8668de1c05d30, type: 3}
   initialSpawn: 300
 --- !u!114 &1657016939
 MonoBehaviour:

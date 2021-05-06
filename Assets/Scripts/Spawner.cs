@@ -7,6 +7,8 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     GameObject boid;
     [SerializeField]
+    GameObject boid2;
+    [SerializeField]
     int initialSpawn = 20;
 
     void Start()
@@ -14,7 +16,12 @@ public class Spawner : MonoBehaviour
         Globals g = GameObject.Find("Globals").GetComponent<Globals>();
         for (int i = 0; i < initialSpawn; i++)
         {
-            GameObject obj = Instantiate(boid);
+            GameObject obj;
+            int choice = Random.Range(0, 2);
+            if(choice == 1)
+                obj = Instantiate(boid);
+            else
+                obj = Instantiate(boid2);
 
             float x = Random.Range(g.bottomLeft.x, g.topRight.x);
             float y = Random.Range(g.bottomLeft.y, g.topRight.y);
