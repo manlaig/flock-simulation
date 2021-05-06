@@ -7321,7 +7321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d299b307bb2d4f74b92f9ae98f376ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boid: {fileID: 3020047058072681953, guid: d1155a5e6231444a4ae320400ea29d1b, type: 3}
+  boid: {fileID: 3020047058072681953, guid: 781552d0b7ff4456dadf377f2459ae72, type: 3}
   boid2: {fileID: 3020047058072681953, guid: 515c16b3c608d4e2cbd8668de1c05d30, type: 3}
   initialSpawn: 200
 --- !u!4 &1159000067 stripped
