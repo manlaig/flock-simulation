@@ -12,6 +12,9 @@ public class Boid : MonoBehaviour
     [Tooltip("Used for identifying different flocks of fish")]
     public string fishName;
 
+    [SerializeField]
+    float turnRate = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +41,7 @@ public class Boid : MonoBehaviour
         float speed = velocity.magnitude;
         speed = Mathf.Clamp(speed, g.minSpeed, g.maxSpeed);
         velocity = velocity.normalized * speed;
-        transform.rotation = Quaternion.LookRotation(velocity);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(velocity), turnRate);
 
         transform.position += velocity * Time.deltaTime;
 
