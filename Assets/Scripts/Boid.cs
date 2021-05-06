@@ -152,6 +152,6 @@ public class Boid : MonoBehaviour
     {
         // used for visualizing the velocity direction
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + velocity);
+        Gizmos.DrawLine(transform.position, transform.position + velocity.normalized * g.overlapRadius);
     }
 }

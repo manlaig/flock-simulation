@@ -7287,11 +7287,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 5
   maxSpeed: 15
-  overlapRadius: 10
+  overlapRadius: 8
   obstacleLookahead: 12
   separationFactor: 4.4
   cohesionFactor: 4
-  alignmentFactor: 3
+  alignmentFactor: 3.3
   obstacleAvoidFactor: 8
   topRight: {x: 50, y: 60, z: 50}
   bottomLeft: {x: -50, y: 0, z: -50}
@@ -7323,7 +7323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boid: {fileID: 3020047058072681953, guid: 781552d0b7ff4456dadf377f2459ae72, type: 3}
   boid2: {fileID: 3020047058072681953, guid: 71d223bbc430940238f297d15dc9f2bc, type: 3}
-  initialSpawn: 200
+  initialSpawn: 250
 --- !u!4 &1159000067 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 780611a67e8e941a2b3aa96e5915a793, type: 3}
