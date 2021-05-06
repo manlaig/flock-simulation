@@ -7286,7 +7286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpeed: 10
-  maxSpeed: 25
+  maxSpeed: 20
   overlapRadius: 10
   obstacleLookahead: 12
   separationFactor: 5
@@ -7323,7 +7323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boid: {fileID: 3020047058072681953, guid: d1155a5e6231444a4ae320400ea29d1b, type: 3}
   boid2: {fileID: 3020047058072681953, guid: 515c16b3c608d4e2cbd8668de1c05d30, type: 3}
-  initialSpawn: 200
+  initialSpawn: 250
 --- !u!4 &1159000067 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 780611a67e8e941a2b3aa96e5915a793, type: 3}
