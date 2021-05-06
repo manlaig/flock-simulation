@@ -9,6 +9,9 @@ public class Boid : MonoBehaviour
     [HideInInspector]
     public Vector3 velocity;
 
+    [Tooltip("Used for identifying different flocks of fish")]
+    public string fishName;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,7 +86,7 @@ public class Boid : MonoBehaviour
         foreach(Collider col in overlaps)
         {
             Boid temp = col.gameObject.GetComponent<Boid>();
-            if (!temp)
+            if (!temp || temp.fishName != fishName)
                 continue;
             total += temp.velocity;
             count++;
@@ -106,7 +109,7 @@ public class Boid : MonoBehaviour
         foreach (Collider col in overlaps)
         {
             Boid temp = col.gameObject.GetComponent<Boid>();
-            if (!temp)
+            if (!temp || temp.fishName != fishName)
                 continue;
             
             total += temp.transform.position;
@@ -131,7 +134,7 @@ public class Boid : MonoBehaviour
         foreach (Collider col in overlaps)
         {
             Boid temp = col.gameObject.GetComponent<Boid>();
-            if (!temp)
+            if (!temp || temp.fishName != fishName)
                 continue;
 
             Vector3 diff = transform.position - temp.transform.position;

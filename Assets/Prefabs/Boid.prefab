@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0, z: 0}
+  fishName: red
 --- !u!135 &6535040668897417525
 SphereCollider:
   m_ObjectHideFlags: 0
