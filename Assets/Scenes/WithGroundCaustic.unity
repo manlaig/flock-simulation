@@ -7292,7 +7292,7 @@ MonoBehaviour:
   separationFactor: 4.4
   cohesionFactor: 4
   alignmentFactor: 3
-  obstacleAvoidFactor: 9
+  obstacleAvoidFactor: 8
   topRight: {x: 50, y: 60, z: 50}
   bottomLeft: {x: -50, y: 0, z: -50}
 --- !u!4 &1093411186
