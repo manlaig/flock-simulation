@@ -24,7 +24,10 @@
 <body>
 
 <h1 align="middle">CS 184: Computer Graphics and Imaging</h1>
-<h1 align="middle">Final Project: Flock Simulator</h1>
+<br>
+<h1 align="middle">Final Project: FLOWS</h1>
+<h1 align="middle">Flock, Low-depth Ocean, and Wave Simulation</h1>
+<br>
 <h2 align="middle">Pongsatorn Chanpanichravee, Michael Ganzorig, and Yu Jia Xu, CS184</h2>
 
 <br><br>
@@ -33,8 +36,16 @@
 
 <h2 align="middle">Overview</h2>
   <p>
-    The goal is to simulate the motion of a flock of fish in a beautify ocean.
-    We will use the Boids algorithm to simulate the motion.
+    The goal of this project is to capture the beauty of the vanishing coral reef that is heavily 
+    impacted by global warming, by simulating a flock of fish swimming in an ocean using Unity.  
+    We picked Unity because it provided us the opportunity to learn and work with the most popular 
+    game engine in the industry. Our original plan was to real-time simulate a flock in an “open” ocean.
+    However, flock simulation works better in an enclosed environment. So we made an aquarium instead. 
+    With smaller environments, we could make a more detailed environment by hand crafting it ourselves 
+    that also helped the flock to behave even more realistic. Moreover, the flock simulation went better 
+    than expected so we can simulate more than one flock of fish, adding to the realism of our coral reef. 
+    The final result is beautiful and hypnotising to look at while still running in real-time with a high 
+    frame rate.
   </p>
   <h3>Why we are doing this</h3>
     <p>
@@ -57,54 +68,198 @@
         </tr>
       </table>
     </div>
-  <h3>What are the challenges</h3>
-    <p>
-      To stimulate this emotion in people, the simulation needs to be believable, realistic, and beautiful, not only
-      in term of graphic but also behavior. This will prove to be challenging to implement boids algorithm to get
-      similar behavior as a real flock of fish that avoid obstacles and interact with other bigger fish.
-      There also challenges in making realistic underwater environment that we must solve to achieve realism.
-    </p>
-<h2 align="middle">Goals and Deliverables</h2>
-  <h3>Goal</h3>
+<h2 align="middle">Technical approach</h2>
+  <h3>Flock Simulation</h3>
   <p>
-    The goal is to simulate a realistic behavior of a flock of fish under the ocean.
-    They swim around obstacles without colliding with them and interact with other fish.
+    The flock simulation is modeled as a sum of 4 different forces acting on each object in the flock. 
+    Each object has a perception radius and the forces are calculated based on neighbors in that radius. 
+    The forces are alignment, cohesion, separation, and obstacle avoidance.
   </p>
+  <div align="center">
+    <table style="width=100%">
+      <tr>
+        <td align="middle">
+          <img src="alignment.gif" width="480px" />
+          <figcaption align="middle">Alignment</figcaption>
+        <td align="middle">
+          <img src="cohesion.gif" width="480px" />
+          <figcaption align="middle">Cohesion</figcaption>
+      </tr>
+      <tr>
+        <td align="middle">
+          <img src="separation.gif" width="480px" />
+          <figcaption align="middle">Separation</figcaption>
+        <td align="middle">
+          <img src="avoidance.gif" width="480px" />
+          <figcaption align="middle">Obstacle Avoidance</figcaption>
+      </tr>
+    </table>
+  </div>
   <p>
-    To achieve this, we plan to deliver underwater environments with different obstacles arranged
-    for the flock to move around in.
+    For <b>alignment</b>, we steer the object toward the average velocity of its neighbors.<br>
+    For <b>cohesion</b>, we steer the object toward the average position of its neighbors.<br>
+    For <b>separation</b>, we make a vector from each neighbor to the current object and take the average of 
+    those vectors across all neighbors.<br> 
+    For <b>obstacle avoidance</b>, we cast a ray toward the facing direction and find any terrain objects 
+    intersecting the ray. If there is, compute a reflection vector if we bounced on that surface point.
+    Then, we steer the object toward that reflection vector.<br>
   </p>
-  <h3>Measure the Quality</h3>
-  <p>
-    We can compare our simulation with real-world behaviors to measure how well our simulation does.
-    Collision and other unrealistic behaviors can also signify the quality of the simulation.
-    We define good performance as being able to render a real-time simulation of a flock without lags and with high FPS.
-    If we can achieve high FPS, that means our algorithm to determine the behavior of the whole flock runs efficiently.
-  </p>
-  <h3>What we plan and what we hope to achieve</h3>
-  <p>
-    We plan to deliver a flock of fish swimming smoothly in real-time render.
-    And if our implementation goes well, we might be able to simulate a huge flock of fish
-    that can avoid obstacles and interact with a big fish like a shark!
-  </p>
-<br>
-<h2 align="middle">Schedule: First draft</h2>
-  <p>
-    1st week: create ocean background, make 3d fish objects. given a group of fish with each of them having
-    different moving direction and speed. Group them to be a flock. <br>
-    2nd week: make improvements to the flock of fish to make it more realistic to the fish in the real world.
-    In this moment just assume this ocean only have this one kind of fish, so no other objects will affect them.<br>
-    3rd week: finish the part of the code about the flock of fish interacting with other objects in the ocean.<br>
-    4th week: reserved as extra if anything happens.
-  </p>
+  <div align="center">
+    <table style="width=100%">
+      <tr>
+        <td align="middle">
+          <img src="sum.gif" width="640px" />
+          <figcaption align="middle">Summing up the forces gives us the flocking motion</figcaption>
+      </tr>
+    </table>
+  </div>
   <br>
-<h2 align="center">Resources</h2>
-  <p>We will use online resources, such as articles and research papers, related to the Boids algorithm,
-    which is the algorithm defining the behavior of a flock. Also, we will build our project on top of
-    the Unity game engine. Using the Unity game engine will make it easier for us to render and deal with 3D models.
-    Using Unity, we will build the 3D environment for our flock and we will write the necessary code to simulate
-    the motion and behavior of the flock in the scene.
+  <h3>Underwater Environment</h3>
+  <div align="center">
+    <table style="width=100%">
+      <tr>
+        <td align="middle">
+          <img src="background.gif" width="640px" />
+      </tr>
+    </table>
+  </div>
+  <p>
+    For the underwater environment, we created 5 walls and a terrain to be both the background
+    and bounding box for the flock simulation. We create water material for the top wall utilizing
+    the Unity standard assets package that provides water texture and reflection. 
   </p>
+  <p>
+    Then we terraformed the terrain with Unity standard terrain tools to resemble a real ocean floor 
+    and added free sand texture into it. All of the objects are polygons with meshes for 
+    flock collision detection. The placement of these objects is to make the flock stand out 
+    and showcase the obstacle avoidance ability of the flocking algorithm.
+  </p>
+  <div align="center">
+    <table style="width=100%">
+      <tr>
+        <td align="middle">
+          <img src="floor.gif" width="460px" />
+          <figcaption align="middle">caustic effect on ocean floor</figcaption>
+        <td align="middle">
+          <img src="surface.gif" width="460px" />
+          <figcaption align="middle">caustic effect on water surface</figcaption>
+      </tr>
+    </table>
+  </div>
+  <p>
+    For realism, we projected water caustic effects on both the ocean floor and surface. 
+    This caustic effect is made of an array of caustic frames, pre-generated by free software. 
+    This helped the underwater environment feel more dynamic.
+  </p>
+  <div align="center">
+    <table style="width=100%">
+      <tr>
+        <td align="middle">
+          <img src="caustic_frame.png" width="340px" />
+          <figcaption align="middle">A sample of a caustic frame used for making caustic effects</figcaption>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <h3>Wave Simulation</h3>
+  <p>
+    The main idea of the Wave simulation is making a mesh of clothes to simulate the action of water 
+    waves by applying some functions on it.
+  </p>
+  <p>
+    Starting by creating a n by n mesh, which uses the knowledge we learned in course and project 1, 
+    we can have clothes with size of n^2<br>
+  </p>
+  <p>
+    We found that the perlin noise equation is commonly used in animations that simulate wave-like changes,
+    so in the second step we will use the perlin noise equation combined with the cosine equation 
+    to simulate the wave changes.<br>
+  </p>
+  <p>
+    The basic algorithm for wave function as below:<br>
+    <code>
+      Changing of Scale -> S = S0 + vt<br>
+      PN -> Perlin Noise function, which is given in Math.PerlinNoise<br>
+      Perlin value = PN(Change of Scale of X/ Dimensions, Change of Scale of Z/ Dimensions) *2pi<br>
+      Perlin value alternative= PN((Change of Scale of X + speed * time)/
+       Dimensions, Change of Scale of Z/ Dimensions )* 2Pi<br>
+      <br>
+      New Z value = Cos(PerlinValue + timechange) * Change of Y<br>
+      New Z value alternative = PerlinValueAlternative * Change of Y(Height)<br>
+    </code>
+  </p>
+  <div align="center">
+    <table style="width=100%">
+      <tr>
+        <td align="middle">
+          <img src="wave1.gif" width="460px" />
+        <td align="middle">
+          <img src="wave2.gif" width="460px" />
+      </tr>
+    </table>
+  </div>
+  <p>The next step is coloring. We added a water material to this mesh, which originally didn't 
+    have any ocean color.At the same time, in order to make it show obvious effects underwater, 
+    we even added the reflection and refraction effects.
+  </p>
+  <div align="center">
+    <table style="width=100%">
+      <tr>
+        <td align="middle">
+          <img src="wave3.gif" width="580px" />
+      </tr>
+    </table>
+  </div>
+<br>
+<h2 align="middle">Result</h2>
+  <p>
+    When we move the flocking motion to 3D and spawn a lot of nemos and dorys, 
+    then we see the following behavior:
+  </p>
+  <div align="center">
+    <table style="width=100%">
+      <tr>
+        <td align="middle">
+          <img src="final_sam1.gif" width="840px" />
+      </tr>
+      <tr>
+        <td align="middle">
+          <img src="final_sam2.gif" width="840px" />
+          <figcaption align="middle">3 types of fish</figcaption>
+      </tr>
+    </table>
+  </div>
+  <div align="center">
+    <table style="width=100%">
+      <tr>
+        <td align="middle">
+          <img src="3cam_fish.gif" width="840px" />
+          <figcaption align="middle">What’s more fascinating is mounting a camera on top of one of the fish!</figcaption>
+      </tr>
+    </table>
+  </div>
+<h2 align="center">References</h2>
+  <p>
+    Boid algorithm<br>
+    <b>Assets from Unity Store</b><br>
+    Standard Assets by Unity Technologies<br>
+    Jiggly Buble Free by Moonflower Carnivore<br>
+    Yughues Free Sand Material by Nobiax / Yughues<br>
+    Polygonal Foilage Asset Package by Aligned Games<br>
+  </p>
+
+<h2 align="center">Contributions</h2>
+<p>
+  <b>Michael Ganzorig</b><br>
+  Implemented the flock simulation algorithm in 2D and 3D and fine-tuned the constant 
+  factors to make the simulation more realistic.<br>
+  <br>
+  <b>Pongsatorn Chanpanichravee</b><br>
+  Created the underwater environment, edited videos, and made presentation material and website <br>
+  <br>
+  <b>Yu Jia Xu</b><br>
+  Created the wave simulation, applied the refraction and reflection to make the scene more realistic.
+</p>
 </div>
 </body>
 </html>
